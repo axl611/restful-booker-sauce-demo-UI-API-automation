@@ -1,0 +1,82 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  filter:
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.changed-files.outputs.api }}
+      ui: ${{ steps.changed-files.outputs.ui }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: changed-files
+        run: |
+          if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            CHANGES=$(git diff --name-only HEAD~1 HEAD)
+          else
+            CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          fi
+          echo "$CHANGES" > changed_files.txt
+          echo "Changed files:"
+          echo "$CHANGES"
+          if echo "$CHANGES" | grep -q 'tests/api/'; then
+            echo "api=true" >> $GITHUB_OUTPUT
+          else
+            echo "api=false" >> $GITHUB_OUTPUT
+          fi
+          if echo "$CHANGES" | grep -qE '(tests/ui/|src/pages/|src/data/)'; then
+            echo "ui=true" >> $GITHUB_OUTPUT
+          else
+            echo "ui=false" >> $GITHUB_OUTPUT
+          fi
+
+  api-tests:
+    needs: filter
+    if: ${{ needs.filter.outputs.api == 'true' }}
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Run API tests
+        run: npx playwright test --project=API-Tests
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: api-playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  ui-tests:
+    needs: filter
+    if: ${{ needs.filter.outputs.ui == 'true' }}
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run UI tests
+        run: npx playwright test --project='UI-Tests*'
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: ui-playwright-report
+          path: playwright-report/
+          retention-days: 30

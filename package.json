@@ -1,0 +1,34 @@
+{
+  "name": "beon-tech-interview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:allure": "playwright test --reporter=list,allure-playwright",
+    "test:ui": "playwright test --project='UI-Tests' --reporter=list,allure-playwright",
+    "test:api": "playwright test --project='API-Tests' --reporter=list,allure-playwright",
+    "allure:generate": "npx allure generate ./allure-results --clean -o ./allure-report",
+    "allure:open": "npm run allure:generate && node ./scripts/open-report.mjs",
+    "allure:report": "npm run allure:generate",
+    "report": "npm run test:allure && npm run allure:open",
+    "ci:test:ui": "npm run test:ui && npm run allure:report",
+    "ci:test:api": "npm run test:api && npm run allure:report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "allure-commandline": "^2.40.0",
+    "allure-playwright": "^2.15.1",
+    "dotenv": "^17.4.2",
+    "open": "^11.0.0"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "zod": "^4.4.3"
+  }
+}

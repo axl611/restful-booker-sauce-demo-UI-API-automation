@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2432","should complete full e-commerce flow: login → add items → cart → checkout → order complete","UI-Tests (WebKit)","2026-05-07","passed","2026-05-07","SauceDemo E-Commerce Flow","ui/ui.spec.ts","",""
+"","2913","should complete full e-commerce flow: login → add items → cart → checkout → order complete","UI-Tests (Firefox)","2026-05-07","passed","2026-05-07","SauceDemo E-Commerce Flow","ui/ui.spec.ts","",""
+"","1985","should complete full e-commerce flow: login → add items → cart → checkout → order complete","UI-Tests (Mobile Safari)","2026-05-07","passed","2026-05-07","SauceDemo E-Commerce Flow","ui/ui.spec.ts","",""
+"","1264","should complete full e-commerce flow: login → add items → cart → checkout → order complete","UI-Tests","2026-05-07","passed","2026-05-07","SauceDemo E-Commerce Flow","ui/ui.spec.ts","",""
+"","685","should complete full booking lifecycle: auth → create → read → update → delete","API-Tests","2026-05-07","passed","2026-05-07","Restful Booker API - Booking Lifecycle","api/login.api.spec.ts","",""
+"","1598","should complete full e-commerce flow: login → add items → cart → checkout → order complete","UI-Tests (Mobile Chrome)","2026-05-07","passed","2026-05-07","SauceDemo E-Commerce Flow","ui/ui.spec.ts","",""
