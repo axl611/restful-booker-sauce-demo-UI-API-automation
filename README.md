@@ -31,7 +31,7 @@ npx playwright install --with-deps
 
 ## Running Tests
 
-**Local Development (with browser report)**
+**Local environment (with browser report)**
 
 ```bash
 npm run test:ui          # UI tests only
@@ -61,7 +61,9 @@ Tests are split into two folders:
 - `tests/ui/` - Runs against https://www.saucedemo.com
 - `tests/api/` - Runs against https://restful-booker.herokuapp.com
 
-File naming: `test-name.ui.spec.ts` or `test-name.api.spec.ts`
+File naming: 
+- UI test should have *.ui.spec.ts naming ie: `test-name.ui.spec.ts`
+- API test should have *.api.spec.ts naming ie: `test-name.api.spec.ts`
 
 **Parallel Execution**
 
@@ -114,7 +116,7 @@ Title
 User should be able to remove any item added from the inventory page
 
 ○ Actual Results:
-When user adds any item then attempts to remove it from cart, the button doesn't action and there's a *Failed to load resource: the server responded with a status of 401 (Unauthorized)* in the console log
+When user adds any item then attempts to remove it from cart, the button doesn't action and there's a *Failed to load resource: the server responded with a status of 401 (Unauthorized)* in the browser console log
 
 ○ Severity:
 High
