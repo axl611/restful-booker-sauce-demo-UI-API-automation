@@ -8,6 +8,13 @@ import { users, checkoutDetails, inventoryItems } from '../../src/data/users';
 
 test.describe('SauceDemo E-Commerce Flow', () => {
 
+    test('should load login page', async ({ page }) => {
+        const loginPage = new LoginPage(page);
+        await loginPage.goto();
+        await expect(page).toHaveURL(/saucedemo\.com/);
+    });
+
+
     const items = [inventoryItems.backpack, inventoryItems.bikeLight];
 
     test('should complete full e-commerce flow: login → add items → cart → checkout → order complete', async ({ page }) => {
