@@ -2,6 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Restful Booker API - Booking Lifecycle', () => {
 
+    test('should return health check', async ({ request }) => {
+        const res = await request.get('/ping');
+        expect(res.status()).toBe(201);
+    });
+
+
     test('should complete full booking lifecycle: auth → create → read → update → delete', async ({ request }) => {
 
         // 1. Authentication - Generate auth token
